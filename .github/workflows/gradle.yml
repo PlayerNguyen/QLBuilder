@@ -20,14 +20,14 @@ jobs:
     env:
       DATABASE_USERNAME: 'root'
       DATABASE_PASSWORD: 'root'
-      DATABASE_DATABASE: 'test'
+      DATABASE_NAME: 'test'
       
     steps:
     - uses: actions/checkout@v2
     - name: Setup MySQL Database
       run: |
         sudo /etc/init.d/mysql start
-        mysql -e 'CREATE DATABASE ${{ env.DATABASE_DATABASE }};' -u${{ env.DATABASE_USERNAME }} -p${{ env.DATABASE_PASSWORD }}
+        mysql -e 'CREATE DATABASE ${{ env.DATABASE_NAME }};' -u${{ env.DATABASE_USERNAME }} -p${{ env.DATABASE_PASSWORD }}
     - name: Set up JDK ${{ matrix.jdk }}
       uses: actions/setup-java@v2
       with:
