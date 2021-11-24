@@ -1,0 +1,42 @@
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+
+name: Gradle test completion
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        jdk: [8,9,10,11,12]
+        
+    env:
+      DATABASE_USERNAME: 'root'
+      DATABASE_PASSWORD: 'root'
+      DATABASE_DATABASE: 'test'
+      
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup MySQL Database
+      run: |
+        - sudo /etc/init.d/mysql start
+        - mysql -e 'CREATE DATABASE ${{ env.DATABASE_DATABASE }};' -u${{ env.DATABASE_USERNAME }} -p${{ env.DATABASE_PASSWORD }}
+    - name: Set up JDK ${{ matrix.jdk }}
+      uses: actions/setup-java@v2
+      with:
+        java-version: ${{ matrix.jdk }}
+        distribution: 'adopt'
+        cache: gradle
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - name: Build with Gradle and test
+      run: ./gradlew build --info
+    - name: Clean up Gradle
+      run: ./gradlew clean
