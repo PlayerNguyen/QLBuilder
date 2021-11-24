@@ -26,8 +26,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Setup MySQL Database
       run: |
-        - sudo /etc/init.d/mysql start
-        - mysql -e 'CREATE DATABASE ${{ env.DATABASE_DATABASE }};' -u${{ env.DATABASE_USERNAME }} -p${{ env.DATABASE_PASSWORD }}
+        sudo /etc/init.d/mysql start
+        mysql -e 'CREATE DATABASE ${{ env.DATABASE_DATABASE }};' -u${{ env.DATABASE_USERNAME }} -p${{ env.DATABASE_PASSWORD }}
     - name: Set up JDK ${{ matrix.jdk }}
       uses: actions/setup-java@v2
       with:
