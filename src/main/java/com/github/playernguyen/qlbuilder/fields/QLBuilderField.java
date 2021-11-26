@@ -100,6 +100,20 @@ public interface QLBuilderField {
     void setUnique(boolean unique);
 
     /**
+     * Set a default value for this field as init value.
+     *
+     * @param string a default value to be set.
+     */
+    void setDefaultValue(String string);
+
+    /**
+     * Retrieves a default value of this field.
+     *
+     * @return a default value of this field.
+     */
+    String getDefaultValue();
+
+    /**
      * Retrieves a string contains SQL query. The SQL table query template: <br>
      * <b>`col_name` DATA_TYPE CONSTRAINTS</b>
      * <br>

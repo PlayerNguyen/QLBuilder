@@ -20,8 +20,8 @@ public class QLConnectorMySQL implements QLConnector {
     private final Properties configuredProperties;
     private final String driverClass = (
             System.getenv("DATABASE_DRIVER_CLASS") != null
-            ? System.getenv("DATABASE_DRIVER_CLASS")
-            : DEFAULT_DRIVER
+                    ? System.getenv("DATABASE_DRIVER_CLASS")
+                    : DEFAULT_DRIVER
     );
 
     public QLConnectorMySQL(Properties configuredProperties) throws ClassNotFoundException {
@@ -60,7 +60,7 @@ public class QLConnectorMySQL implements QLConnector {
      *     <li>...</li>
      * </ul>
      *
-     * @return
+     * @return an url string
      */
     private String generateConnectionString() {
 
@@ -86,6 +86,17 @@ public class QLConnectorMySQL implements QLConnector {
 
     /**
      * {@inheritDoc}
+     *
+     * @return a database name
+     */
+    public String getDatabaseName() {
+        return this.configuredProperties.getProperty("DATABASE_NAME");
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return a connection
      */
     @Override
     public Connection getConnection() throws SQLException {
@@ -99,6 +110,8 @@ public class QLConnectorMySQL implements QLConnector {
 
     /**
      * {@inheritDoc}
+     *
+     * @return a connection type
      */
     @Override
     public QLSQLDatabaseType getType() {

@@ -19,6 +19,12 @@ public interface QLConnector {
     Connection getConnection() throws SQLException;
 
     /**
+     * Retrieves a current database name.
+     * @return a current database name.
+     */
+    String getDatabaseName();
+
+    /**
      * Retrieves database type. This method will branch a function differently
      *
      * @return a type of database system.
