@@ -2,7 +2,7 @@ package com.github.playernguyen.qlbuilder.schemas;
 
 
 import com.github.playernguyen.qlbuilder.connectors.QLConnector;
-import com.github.playernguyen.qlbuilder.schemas.fields.QLBuilderFieldSet;
+import com.github.playernguyen.qlbuilder.fields.QLBuilderFieldSet;
 import com.google.common.base.Preconditions;
 
 import java.util.function.Consumer;

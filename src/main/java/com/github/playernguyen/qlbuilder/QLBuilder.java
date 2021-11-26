@@ -31,6 +31,14 @@ public class QLBuilder {
         }
     }
 
+    /**
+     * Retrieves a schema (a.k.a. Database)
+     * @return a schema object
+     */
+    public QLBuilderSchema getSchema() {
+        return schema;
+    }
+
     public QLConnector getConnector() {
         return connector;
     }
