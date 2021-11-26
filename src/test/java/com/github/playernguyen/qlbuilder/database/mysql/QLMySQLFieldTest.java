@@ -1,21 +1,19 @@
 package com.github.playernguyen.qlbuilder.database.mysql;
 
 import com.github.playernguyen.qlbuilder.fields.QLBuilderField;
-import com.github.playernguyen.qlbuilder.fields.QLBuilderFieldMySQL;
-import com.github.playernguyen.qlbuilder.fields.QLBuilderFieldTypeMySQL;
+import com.github.playernguyen.qlbuilder.fields.mysql.QLBuilderFieldMySQL;
+import com.github.playernguyen.qlbuilder.fields.mysql.QLBuilderFieldTypeMySQL;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class QLMySQLFieldTest {
 
     @Test
-    public void shouldNotNullInstance() {
+    public void shouldBeIntegerType() {
         QLBuilderFieldTypeMySQL type = QLBuilderFieldTypeMySQL.INTEGER;
         String name = "id";
 
@@ -23,6 +21,7 @@ public class QLMySQLFieldTest {
         Assertions.assertEquals(fieldResponse.getName(), name);
         Assertions.assertEquals(fieldResponse.getType(), type);
         Assertions.assertNotNull(fieldResponse.getFieldFunction());
+        Assertions.assertEquals(fieldResponse.getType().toSQLType(), "INT");
     }
 
     @Test
@@ -31,7 +30,7 @@ public class QLMySQLFieldTest {
         List<QLBuilderField> fieldList = new ArrayList<>();
 
         fieldList.add(new QLBuilderFieldMySQL(QLBuilderFieldTypeMySQL.INTEGER, fieldName));
-        // Not Null
+
         QLBuilderFieldMySQL field1 = new QLBuilderFieldMySQL(QLBuilderFieldTypeMySQL.INTEGER, fieldName);
         field1.setNullable((false));
         fieldList.add(field1);
@@ -46,6 +45,7 @@ public class QLMySQLFieldTest {
         field3.setNullable(true);
         field3.setAutoIncrement(true);
         field3.setUnique(true);
+        field3.setSize(255);
         fieldList.add(field3);
 
         QLBuilderFieldMySQL field4 = new QLBuilderFieldMySQL(QLBuilderFieldTypeMySQL.INTEGER, fieldName);
@@ -53,6 +53,7 @@ public class QLMySQLFieldTest {
         field4.setAutoIncrement(true);
         field4.setUnique(true);
         field4.setPrimaryKey(true);
+        field4.setSize(1);
         fieldList.add(field4);
 
         System.out.println(Arrays.toString(fieldList
@@ -63,14 +64,13 @@ public class QLMySQLFieldTest {
                         .stream()
                         .map(QLBuilderField::toSQLQuery)
                         .toArray(),
-                Arrays.asList("`id` INT",
-                        "`id` INT NOT NULL",
-                        "`id` INT UNIQUE NOT NULL AUTO INCREMENT",
-                        "`id` INT UNIQUE AUTO INCREMENT",
-                        "`id` INT UNIQUE AUTO INCREMENT PRIMARY KEY"
+                Arrays.asList("`id` INT(255)",
+                        "`id` INT(255) NOT NULL",
+                        "`id` INT(255) UNIQUE NOT NULL AUTO_INCREMENT",
+                        "`id` INT(255) UNIQUE AUTO_INCREMENT",
+                        "`id` INT(1) UNIQUE AUTO_INCREMENT PRIMARY KEY"
                         ).toArray());
     }
-
 
 
 }
